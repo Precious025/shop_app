@@ -9,7 +9,7 @@ class Badge extends StatelessWidget {
   });
 
   final Widget child;
-  final String value;
+  final String? value;
   final Color color;
 
   @override
@@ -36,7 +36,7 @@ class Badge extends StatelessWidget {
               minHeight: 16,
             ),
             child: Text(
-              value,
+              value!,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 10,

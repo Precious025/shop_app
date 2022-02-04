@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../providers/products.dart';
 
 class UserProductsItem extends StatelessWidget {
-  final String id;
-  final String title;
+  final String? id;
+  final String? title;
   final String imageUrl;
 
   const UserProductsItem(
@@ -14,12 +14,13 @@ class UserProductsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
     final mediaQ = MediaQuery.of(context).devicePixelRatio;
     // ignore: avoid_print
     print(mediaQ);
     return ListTile(
       title: Text(
-        title,
+        title!,
       ),
       leading: CircleAvatar(
         backgroundImage: NetworkImage(
@@ -42,8 +43,17 @@ class UserProductsItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
-              onPressed: () {
-                Provider.of<Products>(context, listen: false).deleteProduct(id);
+              onPressed: () async {
+                try {
+                  await Provider.of<Products>(context, listen: false)
+                      .deleteProduct(id!);
+                } catch (error) {
+                  scaffold.showSnackBar(
+                    const SnackBar(
+                      content: Text('Could not delete!'),
+                    ),
+                  );
+                }
               },
               icon: const Icon(
                 Icons.delete,

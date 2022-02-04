@@ -13,10 +13,10 @@ class CartItem extends StatelessWidget {
   );
 
   final String? id;
-  final double price;
-  final String productId;
+  final double? price;
+  final String? productId;
   final int quantity;
-  final String title;
+  final String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class CartItem extends StatelessWidget {
       ),
       direction: DismissDirection.endToStart,
       onDismissed: (direction) {
-        Provider.of<Cart>(context, listen: false).removeItem(productId);
+        Provider.of<Cart>(context, listen: false).removeItem(productId!);
       },
       confirmDismiss: (direction) {
         return showDialog(
@@ -86,10 +86,10 @@ class CartItem extends StatelessWidget {
               ),
             ),
             title: Text(
-              title,
+              title!,
             ),
             subtitle: Text(
-              'Total: \$${price * quantity}',
+              'Total: \$${price! * quantity}',
             ),
             trailing: Text(
               '$quantity x',

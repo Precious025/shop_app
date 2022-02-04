@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class CartItem {
   final String? id;
-  final String title;
-  final double price;
+  final String? title;
+  final double? price;
   final int quantity;
 
   CartItem({
@@ -29,19 +29,19 @@ class Cart with ChangeNotifier {
     double total = 0.0;
     // ignore: avoid_types_as_parameter_names, non_constant_identifier_names
     _items.forEach((key, CartItem) {
-      total += CartItem.price * CartItem.quantity;
+      total += (CartItem.price! * CartItem.quantity);
     });
     return total;
   }
 
   void addItem(
-    String productId,
+    String? productId,
     String title,
     double price,
   ) {
     if (_items.containsKey(productId)) {
       _items.update(
-        productId,
+        productId!,
         (existingItem) => CartItem(
           id: existingItem.id,
           title: existingItem.title,
@@ -51,7 +51,7 @@ class Cart with ChangeNotifier {
       );
     } else {
       _items.putIfAbsent(
-          productId,
+          productId!,
           () => CartItem(
                 id: DateTime.now().toString(),
                 title: title,
@@ -67,13 +67,13 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeSingleItem(String productId) {
+  void removeSingleItem(String? productId) {
     if (!_items.containsKey(productId)) {
       return;
     }
     if (_items[productId]!.quantity > 1) {
       _items.update(
-          productId,
+          productId!,
           (existingItem) => CartItem(
                 id: existingItem.id,
                 title: existingItem.title,
